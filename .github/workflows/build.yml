@@ -26,7 +26,9 @@ jobs:
       
       - name: Publish to Exchange
         run: |
-          mvn deploy --settings .maven/settings.xml -DskipMunitTests
+          mvn deploy --settings .maven/settings.xml -DskipMunitTests \
+          -Danypoint.username="${{ secrets.anypoint_platform_username }}" \
+          -Danypoint.password="${{ secrets.anypoint_platform_username }}"
 
       - name: Deploy to CloudHub 2.0
         run: |
