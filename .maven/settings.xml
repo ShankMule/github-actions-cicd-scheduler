@@ -7,9 +7,9 @@
 
   <servers>
     <server>
-		<id>Repository</id>
-		<username>${client.id}</username>
-		<password>${client.secret}</password>
+		<id>anypoint-exchange-v3</id>
+		<username>ShankJuneMule</username>
+		<password>ShankJuneMule@13</password>
 	</server>
   </servers>
 

@@ -27,11 +27,11 @@ jobs:
       - name: Publish to Exchange
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests \
-          -Dclient.id="${{ secrets.CLIENT_ID }}" \
-          -Dclient.secret="${{ secrets.CLIENT_SECRET }}"
+          -Dclient.id="${{ secrets.anypoint_platform_username }}" \
+          -Dclient.secret="${{ secrets.anypoint_platform_username }}"
 
       - name: Deploy to CloudHub 2.0
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
-          -Dclient.id="${{ secrets.CLIENT_ID }}" \
-          -Dclient.secret="${{ secrets.CLIENT_SECRET }}"
+          -Danypoint.username="${{ secrets.anypoint_platform_username }}" \
+          -Danypoint.password="${{ secrets.anypoint_platform_username }}"
