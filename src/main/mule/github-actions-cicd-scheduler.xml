@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></mule>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="github-actions-cicd-schedulerFlow" doc:id="82891f8a-8166-4c65-b8ba-ae1a69dce352" >
+		<scheduler doc:name="Run for every 2 min" doc:id="abbfeb04-d440-49a0-a4e6-f06cc3b9a628" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="15" timeUnit="SECONDS" startDelay="5"/>
+			</scheduling-strategy>
+		</scheduler>
+		<logger level="INFO" doc:name="start-log" doc:id="0b014196-4e8e-4192-95a1-e77d3aa37603" message='#["Scheduler started successfully"]'/>
+		<set-variable value="#[randomInt(2) + 1]" doc:name="random" doc:id="6cf29c49-a718-426a-b086-871a66092b3b" variableName="randomVar"/>
+		<ee:transform doc:name="response-file" doc:id="93664b77-1b27-48e1-b170-2e5bebc83952" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="responseFileSelector" ><![CDATA[%dw 2.0
+output application/java
+---
+if(vars.randomVar == 1)
+    readUrl('classpath://dwl/response1.dwl', 'text/plain')
+else if(vars.randomVar == 2)
+    readUrl('classpath://dwl/response2.dwl', 'text/plain')
+else
+    readUrl('classpath://dwl/response3.dwl', 'text/plain')
+]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:dynamic-evaluate doc:name="Dynamic-Evaluate-Response" doc:id="019cadb0-d3d7-4083-9b43-d52c0799d016" expression="#[vars.responseFileSelector]"/>
+		<logger level="INFO" doc:name="print-payload" doc:id="b2042d63-bb9c-4076-9c9e-c2b1d7a67af1" message="#[payload]"/>
+	</flow>
+</mule>
