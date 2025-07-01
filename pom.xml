@@ -43,7 +43,8 @@
 						<applicationName>github-actions-cicd-scheduler</applicationName>
 						<replicas>${app.replicas}</replicas>
 						<vCores>${app.vCores}</vCores>
-						<server>Repository</server>
+						<username>${anypoint.username}</username>
+						<password>${anypoint.password}</password>
 						<deploymentSettings>
 							<generateDefaultPublicUrl>true</generateDefaultPublicUrl>
 						</deploymentSettings>
