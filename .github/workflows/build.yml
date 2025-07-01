@@ -26,9 +26,7 @@ jobs:
       
       - name: Publish to Exchange
         run: |
-          mvn deploy --settings .maven/settings.xml -DskipMunitTests \
-          -Dclient.id="9c490593ea57493182340f98434176b5" \
-          -Dclient.secret="aF11DD271E7346bb8049eB945f925841"
+          mvn deploy --settings .maven/settings.xml -DskipMunitTests
 
       - name: Deploy to CloudHub 2.0
         run: |
