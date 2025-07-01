@@ -32,6 +32,14 @@ jobs:
         commitHash=$(git rev-parse --short "$GITHUB_SHA")
         artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
         mv $artifactName1 $artifactName2
+    - name: Publish Asset to Exchange
+      env:
+          ANYPOINT_USERNAME: ${{ secrets.anypoint_platform_username }}
+          ANYPOINT_PASSWORD: ${{ secrets.anypoint_platform_password }}
+      run: |
+        mvn deploy \
+         -Danypoint.username="$USERNAME" \
+         -Danypoint.password="$PASSWORD" 
     - name: Upload artifact 
       uses: actions/upload-artifact@v4
       with:
